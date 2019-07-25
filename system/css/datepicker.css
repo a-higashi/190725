@@ -1,0 +1,31 @@
+@charset "utf-8";
+div.calconteiner {
+ position:absolute;
+ background-color:#FFFFFF;
+ z-index:10000;
+}
+ul.calender{
+ width:308px;
+ list-style:none;
+ margin:0px;
+ margin-left:4px;
+ padding:0px;
+}
+ul.calender li{
+ width:33px;
+ float:left;
+ height:30px;
+ background:#e7e7e7;
+ margin:2px;
+ padding:6px 3px 3px 3px;
+ text-align:center;
+}
+ul.calender li.fair{
+ height:30px;
+ text-align:center;
+ background-color:#9C3;
+}
+
+ul.calender li.sub {
+ font-size:9px;
+}

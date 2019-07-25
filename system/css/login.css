@@ -1,0 +1,68 @@
+@charset "utf-8";
+/*
+@media screen and (min-width: 992px) {
+	.box {
+		position:absolute;
+		height: auto;
+		top: 50%;
+		left: 15%;
+		margin: 0 auto;
+	}
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+	.box {
+		position:absolute;
+		height: auto;
+		top: 50%;
+		left: 10%;
+		margin: 0 auto;
+	}
+}
+
+
+@media screen and (max-width: 768px) {
+	.box {
+		position:absolute;
+		height: auto;
+		top: 50%;
+		left: 5%;
+		margin: 0 auto;
+	}
+}
+*/
+
+body#login {
+  background-color: #F1F0F6;
+  background-image: none;
+}
+
+#box {
+	position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 100%;
+}
+
+div.form_float {
+	float:left;
+	margin:0 6px 0 0;
+}
+div.form_btn {
+	float:left;
+	margin: 18px 0 0 0;
+}
+
+form.form-inline input.login {
+min-width:100%;
+width:100%;
+}
+
+div#comment {
+	margin:10px 0 30px 0;
+	line-height:130%;
+	color:#aaa;
+}

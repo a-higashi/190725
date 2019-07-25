@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <?php $this->mb_include(HTMLDIR. '/include/head.html') ?>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="header">
+        <?php $this->mb_include(HTMLDIR. '/include/header.html') ?>
+      </div>
+      <!-- /#header -->
+      <div id="contents">
+        <div class="col-md-2 sidebar">
+          <?php $this->mb_include(HTMLDIR. '/include/sidebar.html') ?>
+        </div>
+        <!-- /.col-xs-2 -->
+        <div class="col-md-10">
+          <ol class="breadcrumb">
+            <li>
+              <a href="./">
+              <?php echo SITENAME ?>
+              </a>
+            </li>
+            <li class="active">アカウント管理</li>
+          </ol>
+          <!-- ./breadcrumb -->
+          <div id="navi">
+            <ul class="nav nav-pills">
+              <li role="presentation">
+                <button class="btn-nav active btn-active">アカウント一覧</button>
+              </li>
+              <li role="presentation">
+                <button class="btn btn-nav" onclick="location.href='<?php echo MYSELF ?>?mode=form&<?php echo $this->query_string ?>'">新規登録</button>
+              </li>
+            </ul>
+          </div>
+          <!--#navi-->
+          <div id="data">
+            <div class="patternPan">アカウント一覧を表示しています。</div>
+            <form name="form" action="<?php echo MYSELF ?>" method="POST">
+              <input type="hidden" name="mode" value="update">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th class="threg col-md-4 text-center">アカウント名</th>
+                    <th class="threg col-md-4 text-center">ID</th>
+                    <th class="threg col-md-2 text-center">権限</th>
+                    <th class="threg col-md-2 text-center" colspan="2">処理</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($this->login_data AS $seq => $data): ?>
+                  <tr>
+                    <td class="text-center tdreg">
+                      <?php echo _str($data[ 'login_name']) ?>
+                    </td>
+                    <td class="tdreg">
+                      <?php echo _str($data[ 'id']) ?>
+                    </td>
+                    <td class="text-center tdreg">
+                      <?php echo $this->labelAuthority[$data['authority']] ?>
+                    </td>
+                    <td class="text-center tdreg">
+                      <a href="<?php echo MYSELF ?>?mode=form&seq=<?php echo $seq ?>&<?php echo $this->query_string ?>" class="btn btn-default btn-sm"><span class="fa fa-edit" alt="修 正"></span>&nbsp;修正</a>
+                      <a href="<?php echo MYSELF ?>?mode=confirm_delete&seq=<?php echo $seq ?>&<?php echo $this->query_string ?>" class="btn btn-danger btn-sm"><span class="fa fa-trash-o" alt="削 除"></span>&nbsp;削除</a>
+                    </td>
+                  </tr>
+                  <?php endforeach ?>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="6">
+                      <font>
+                      全<?php echo number_format($this->count) ?>件中 <?php echo number_format($this->pager->get_count_start()) ?> ～ <?php echo number_format($this->pager->get_count_end()) ?>件目を表示
+                      </font>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </form>
+<?php if ($this->pager && $this->pager->has_pages()): ?>
+            <nav class="text-center">
+              <ul class="pagination">
+<?php   if ($this->pager->has_prev()): ?>
+                <li><a href="<?php echo $this->pager->prev_url() ?>" aria-label="Previous">&laquo;</a></li>
+<?php   endif ?>
+<?php   foreach ($this->pager->pages AS $data): ?>
+<?php     if ($data[ 'current']): ?>
+                <li class="active"><a href="<?php echo $data['url'] ?>">
+                  <?php echo $data[ 'page'] ?><span class="sr-only">(current)</span></a></li>
+<?php     else: ?>
+                <li><a href="<?php echo $data['url'] ?>"><?php echo $data[ 'page'] ?></a></li>
+<?php     endif ?>
+<?php   endforeach ?>
+<?php   if ($this->pager->has_next()): ?>
+                <li><a href="<?php echo $this->pager->next_url() ?>" aria-label="Next">&raquo;</a></li>
+<?php   endif ?>
+              </ul>
+            </nav>
+<?php endif ?>
+          </div>
+          <!-- /#data -->
+        </div>
+        <!-- /.col-md-10 -->
+      </div>
+      <!-- /#contents .row -->
+    </div>
+    <!-- /#wrapper -->
+    <?php $this->mb_include(HTMLDIR. '/include/footer.html') ?>
+  </body>
+</html>

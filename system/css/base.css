@@ -1,0 +1,60 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*
+===== 1: BASE STYLE ====================================
+*/
+/* =========================================================
+■wrapper
+========================================================= */
+div#wrapper {
+	width:900px;
+	margin: 15px 0 0 12px;
+	text-align:left;
+	display: block;
+	width: 98%;
+	
+
+}
+div#wrapper_login {
+	width:100%;
+	text-align:left;
+	display: block;
+	padding: 16px 12px 12px 12px;
+	margin: 0;
+}
+div#wrapper_footer {
+	width:100%;
+	margin: 0 auto;
+	text-align:left;
+	display: block;
+	padding: 16px 12px 12px 12px;
+}
+
+/* =========================================================
+■container
+========================================================= */
+div#container:after {
+	content: "."; 
+	display: block; 
+	height: 0; 
+	clear: both; 
+	visibility: hidden;
+}
+div#container {
+	display: inline-table;
+	min-height: 1%;
+}
+/* Hides from IE-mac \*/
+* html div#container { height: 1%; }
+div#container_top { 
+	display: block;
+}
+div#container { 
+	display: block;
+	width: 84%;
+
+margin-left:180px;
+
+ }
+/* End hide from IE-mac */

@@ -1,0 +1,26 @@
+    <script type="text/javascript" src="js/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/jQueryAutoHeight.js"></script>
+    <script>
+      $(function() {
+        $(window).on('load resize', function() {
+          $('#fixorder').attr('disabled', true);
+          $('#fixorder').css('color', '#999');
+          var sortable = $('.sortable');
+          var tr = sortable.find('tr');
+          tr.removeAttr('style');
+          tr.autoHeight();
+          sortable.sortable();
+          sortable.disableSelection();
+          sortable.sortable({
+            update: function(ev, ui) {
+              tr.autoHeight();
+              $('#fixorder').attr('disabled', false);
+              $('#fixorder').css('color', 'black');
+              var order = sortable.sortable("toArray");
+              $("#order").val(order);
+            },
+            placeholder: "placeholder"
+          });
+        });
+      });
+    </script>

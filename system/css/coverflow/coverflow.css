@@ -1,0 +1,51 @@
+@charset "utf-8";
+
+div.coverflow {
+ margin: 20px;
+ height: 220px;
+ border: 2px solid #999;
+ overflow: hidden;
+ width:95%;
+ background-color:#000;
+ position: relative;
+}
+            
+div.magnifyme {
+ height: 120px;
+ padding: 30px;
+ position: absolute;
+ top: 0px;
+ left: 0px;
+ width: 2000px;
+}
+div.slider {
+ position: absolute;
+ bottom: 5px;
+ left: 50%;
+ margin-left:-271px;
+ width: 542px;
+ height: 19px;
+ background: url(image/scrollbar.png) no-repeat;
+}
+            
+div.ui-slider-handle {
+ position: absolute;
+ cursor: pointer;
+ cursor: hand;
+ top: 0px;
+ left: 0px;
+ height: 100%;
+ width: 181px;
+ background: url(image/handle.png) no-repeat;
+}
+        
+div.magnifyme img {
+ width: 64px;
+ height: 64px;
+ float: left;
+ margin: 5px;
+ position: relative;
+ border: 1px solid #999;
+ display:block;
+ cursor:pointer;
+}

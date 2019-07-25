@@ -1,0 +1,11 @@
+<div class="row no-row br" >
+  <div class="col-xs-3">
+    <?php echo SITENAME ?><br><span class="hides"> </span>WEB SYSTEM
+  </div>
+  <div class="col-xs-9 text-right">
+    <span id="datetime"></span><span class="hides">&nbsp;&nbsp;</span><br>
+    <?php echo $_SESSION['auth_admin']['login_name'] ?>さんがログインしています<span class="hides">&nbsp;</span><br>
+    <a href="<?php echo MYSELF ?>?logout=1" class="btn btn-default btn-xs" style="margin-top: -2px;"><span class="fa fa-sign-out"></span>ログアウト</a>
+  </div>
+  <div id="logo"></div>
+</div>

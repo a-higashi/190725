@@ -1,0 +1,10 @@
+#メモリ使用量の制限
+#php_value memory_limit 256M
+
+#POSTデータに許可される最大サイズ
+#php_value post_max_size 200M
+
+#1つのファイルアップロードに許可される最大サイズ
+#php_value upload_max_filesize 200M
+
+RewriteEngine Off

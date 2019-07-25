@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <link rel="stylesheet" type="text/css" href="./css/login.css" />
+<?php $this->mb_include(HTMLDIR. '/include/head.html') ?>
+  </head>
+  <body id="login">
+    <div id="box">
+      <div class="container-fluid">
+        <div class="col-md-offset-1">
+          <form action="<?php echo MYSELF ?>" method="post" class="form-inline">
+            <input type="hidden" name="login" value="true">
+            <input type="hidden" name="offset" value="<?php echo $this->_offset ?>" />
+<?php foreach ($this->query AS $name => $value): ?>
+            <input type="hidden" name="<?php echo $name ?>" value="<?php echo _str($value) ?>" />
+<?php endforeach ?>
+            <input type="hidden" name="mode" value="<?php echo $this->_mode ?>">
+            <input type="hidden" name="seq" value="<?php echo $this->_seq ?>">
+            <div class="form-group">
+              <div class="form_float">
+                <span class="t10">USER ACCOUNT</span>
+                <br />
+                <input id="username" type="text" name="id" value="<?php echo $this->_id ?>" class="form-control login" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form_float">
+                <span class="t10">PASSWORD</span>
+                <br />
+                <input id="userpw" type="password" name="password" value="<?php echo $this->_password ?>" class="form-control login" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form_float">
+                <span class="t10">&nbsp;</span>
+                <br />
+                <button type="submit" class="btn btn-primary" name="ok"><span class="fa fa-sign-in"></span>&nbsp;LOGIN</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="col-md-offset-1">
+          <div id="comment">
+            <ul>
+<?php if ($this->error): ?>
+              <li class="t10"><font class="error"><?php echo $this->error ?></font>
+              </li>
+<?php elseif ($this->logout): ?>
+              <li class="t10"><font class="error">完全にログアウトしました。</font>
+              </li>
+<?php else: ?>
+              <li class="t10">・アカウント情報を入力してください。</li>
+<?php endif ?>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div id="copy" class="col-md-offset-1">
+          <?php echo COPYRIGHT ?>
+        </div>
+      </div>
+    </div>
+    <!-- /.box -->
+    <?php $this->mb_include(HTMLDIR. '/include/footer.html') ?>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*
+===== 1: LINK STYLE ====================================
+*/
+a:link{
+	/*color:#06C;*/
+	text-decoration:none;
+}
+
+a:visited{
+	/*color: #06C;*/
+	text-decoration:none;
+}
+a:hover{
+	color:#0000ff;
+	text-decoration:underline;
+}
+a:active{
+	color: #C30;
+}
+p.patternA a:link{
+	color:#6633CC;
+}
+p.patternA a:visited{
+	color:#6633CC;
+}
+p.patternA a:hover{
+	/*color:#6600FF;*/
+}
+p.patternA a:active{
+	color:#C30;
+}
+
+p.repeatA a:link{
+	color:#CC00CC;
+}
+p.repeatA a:visited{
+	color:#CC00CC;
+}
+p.repeatA a:hover{
+	/*color:#6600FF;*/
+}
+p.repeatA a:active{
+	color:#C30;
+}

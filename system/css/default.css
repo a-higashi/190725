@@ -1,0 +1,128 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/*
+===== 1: universal reset =================================
+*/
+
+*{
+	margin:0;
+	padding:0;
+}
+
+/*
+===== 2: body and base setting ===========================
+*/
+
+@media screen and (max-width: 768px) {
+	body {
+		font: normal 12px Verdana,'メイリオ','Meiryo','Osaka','ＭＳ Ｐゴシック',sans-serif;
+		margin: 0;
+		padding: 0;
+		letter-spacing:0.06em;
+		line-height:150%;
+		background: #F1F0F6;
+		color:#555;
+		background-image:url(../cmn_img/bg_3.jpg);
+		background-repeat:repeat-x;
+	}
+}
+
+@media screen and (min-width: 768px) {
+	body {
+		font: normal 12px Verdana,'メイリオ','Meiryo','Osaka','ＭＳ Ｐゴシック',sans-serif;
+		margin: 0;
+		padding: 0;
+		letter-spacing:0.06em;
+		line-height:150%;
+		background: #F1F0F6;
+		color:#555;
+		background-image:url(../cmn_img/bg_2.jpg);
+		background-repeat:repeat-x;
+	}
+}
+
+@media screen and (min-width: 992px) {
+	body {
+		font: normal 12px Verdana,'メイリオ','Meiryo','Osaka','ＭＳ Ｐゴシック',sans-serif;
+		margin: 0;
+		padding: 0;
+		letter-spacing:0.06em;
+		line-height:150%;
+		background: #F1F0F6;
+		color:#555;
+		background-image:url(../cmn_img/bg.jpg);
+		background-repeat:repeat-x;
+	}
+}
+
+body table{
+	margin:auto;
+}
+
+html{
+
+}
+
+/* general params
+--------------------*/
+h1, h2, h3, h4, h5, h6, p, address,
+ul, ol, li, dl, dt, dd,
+caption, img, form {
+        margin: 0;
+        padding: 0;
+        border: none;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 100%;
+        text-align: left;
+
+}
+table, th, td{
+        font-style: normal;
+        font-weight: normal;
+        font-size: 100%;
+        text-align: left;
+}
+textarea { font-size: 100%; }
+
+/*hr  { display: none; }*/
+
+h3{
+	padding: 0;/* margin&padding reset */
+	text-align: left;
+	display: block;
+	margin: 0px;
+	font-size:12px;
+	font-style: normal;
+	font-weight: normal;
+	color:#000;
+}
+
+table {margin : 0;empty-cells: show; font-size:12px;}
+/*
+hr,.areaAnchor,.anchor {
+	display : none;
+	height:800px;
+}
+*/
+img {
+	border: none;/* img do not want a border */
+	vertical-align: bottom;
+}
+img {
+ -ms-interpolation-mode:bicubic;
+}
+li { list-style: none; }/* link do not want a dot */
+
+/* acronyms and abbreviations styles 
+-------------------------------------*/
+acronym,abbr{cursor:help;}
+
+/*
+===== 3: form setting ===========================
+
+select{ padding-right:10px; }
+*+html select{padding-right:0;}/* for IE7&Opera */
+* html select{padding-right:0;}/* for IE6 */　　

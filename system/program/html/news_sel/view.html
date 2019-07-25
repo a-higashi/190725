@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <?php $this->mb_include(HTMLDIR. '/include/head.html') ?>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="header">
+        <?php $this->mb_include(HTMLDIR. '/include/header.html') ?>
+      </div>
+      <!-- /#header -->
+      <div id="contents" class="row">
+        <div class="col-md-2 sidebar">
+          <?php $this->mb_include(HTMLDIR. '/include/sidebar.html') ?>
+        </div>
+        <!-- /.col-xs-2 -->
+        <div class="col-md-10">
+          <ol class="breadcrumb">
+            <li>
+              <a href="./">
+              <?php echo SITENAME ?>
+              </a>
+            </li>
+            <li class="active">
+              <?php echo $this->item_subject ?>情報管理
+            </li>
+          </ol>
+          <!-- /.breadcrumb -->
+          <div id="navi">
+            <ul class="nav nav-pills">
+              <li role="presentation">
+                <button class="btn-nav active btn-active">
+                <?php echo $this->item_subject ?>情報一覧</button>
+              </li>
+              <li role="presentation">
+                <button class="btn btn-nav" onclick="location.href='<?php echo MYSELF ?>?mode=form&<?php echo $this->query_string ?>'">新規登録</button>
+              </li>
+            </ul>
+          </div>
+          <!--#navi-->
+          <div id="data">
+            <div class="patternPan">
+              <?php echo $this->item_subject ?>情報一覧を表示しています。
+            </div>
+<?php /*
+            <div class="patternPan">
+              <?php if (!$this->cat) : ?>
+                  <a class="btn btn-default active" >ALL</a>
+              <?php else : ?>
+                  <a class="btn btn-primary" href="<?php echo MYSELF ?>" >ALL</a>
+              <?php endif ?>
+              <?php foreach ($this->labelCategory as $key => $category): ?>
+                <?php if ($this->cat == $key) : ?>
+                  <button class="btn btn-default active" ><?php echo $category ?></button>
+                <?php else : ?>
+                  <a class="btn btn-primary" href="<?php echo MYSELF ?>?cat=<?php echo $key ?>" ><?php echo $category ?></a>
+                <?php endif ?>
+              <?php endforeach ?>
+            </div>
+            <!-- /.patternPan -->
+ */ ?>
+            <form name="form" action="<?php echo MYSELF ?>" method="POST" id="form">
+              <input type="hidden" name="mode" value="update">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th class="threg col-md-2 text-center">掲載日</th>
+                    <th class="threg col-md-2 text-center">カテゴリ</th>
+                    <th class="threg col-md-5 text-center">タイトル</th>
+                    <th class="threg col-md-1 text-center">公開設定</th>
+                    <th class="threg col-md-2 text-center" colspan="2">処理</th>
+                  </tr>
+                </thead>
+                <tbody>
+<?php foreach ($this->display AS $seq => $data): ?>
+                  <tr>
+                    <td class="text-center tdreg">
+                      <?php echo date('Y/m/d', $data['publish']) ?>
+                    </td>
+                    <td class="tdreg">
+                      <?php echo $this->labelCategory[$data['category']] ?>
+                    </td>
+                    <td class="tdreg">
+                      <?php echo _str($data['title']) ?>
+                    </td>
+                    <td class="text-center tdreg">
+                      <input type="hidden" name="seq[<?php echo $seq ?>]" value="<?php echo $seq ?>">
+                      <?php echo checkbox( "flag[$seq]", $this->labelCheck, $data['flag']) ?>
+                    </td>
+                    <td class="text-center tdreg">
+                      <a href="<?php echo MYSELF ?>?mode=form&seq=<?php echo $seq ?>&<?php echo $this->query_string ?>" class="btn btn-default btn-sm"><span class="fa fa-edit" alt="修 正"></span>&nbsp;修正</a>
+                      <a href="<?php echo MYSELF ?>?mode=confirm_delete&seq=<?php echo $seq ?>&<?php echo $this->query_string ?>" class="btn btn-danger btn-sm"><span class="fa fa-trash-o" alt="削 除"></span>&nbsp;削除</a>
+                    </td>
+                  </tr>
+<?php endforeach ?>
+                </tbody>
+                <tfoot>
+                  <tr class="br">
+                    <td colspan="3">&nbsp;</td>
+                    <td class="text-center">
+                      <button type="submit" class="btn btn-primary" name="update" value=" "><span class="glyphicon glyphicon-refresh" alt="更 新"></span><br><span class="hide">&nbsp;</span>更新</button>
+                    </td>
+                    <td colspan="1">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td colspan="5">
+                      全<?php echo number_format($this->count) ?>件中 <?php echo number_format($this->pager->get_count_start()) ?> ～ <?php echo number_format($this->pager->get_count_end()) ?>件目を表示
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </form>
+            <!-- /#form -->
+<?php if ($this->pager && $this->pager->has_pages()): ?>
+            <nav class="text-center">
+              <ul class="pagination">
+<?php if ($this->pager->has_prev()): ?>
+                <li><a href="<?php echo $this->pager->prev_url() ?>" aria-label="Previous">&laquo;</a></li>
+<?php endif ?>
+<?php foreach ($this->pager->pages AS $data): ?>
+<?php if ($data[ 'current']): ?>
+                <li class="active"><a href="<?php echo $data['url'] ?>"><?php echo $data[ 'page'] ?><span class="sr-only">(current)</span></a></li>
+<?php else: ?>
+                <li><a href="<?php echo $data['url'] ?>"><?php echo $data[ 'page'] ?></a></li>
+<?php endif ?>
+<?php endforeach ?>
+<?php if ($this->pager->has_next()): ?>
+                <li><a href="<?php echo $this->pager->next_url() ?>" aria-label="Next">&raquo;</a></li>
+<?php endif ?>
+              </ul>
+            </nav>
+<?php endif ?>
+          </div>
+          <!-- /#data -->
+        </div>
+        <!-- /.col-md-10 -->
+      </div>
+      <!-- /#contents .row -->
+    </div>
+    <!-- /#wrapper -->
+    <?php $this->mb_include(HTMLDIR. '/include/footer.html') ?>
+  </body>
+</html>

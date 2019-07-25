@@ -1,0 +1,21 @@
+    <link rel="stylesheet" type="text/css" href="css/tablednd.css"/>
+    <script type="text/javascript" src="js/jquery.tablednd.js"></script>
+    <script type="text/javascript">
+      <!--
+        $(document).ready(function(){
+          $('#fixorder').attr('disabled', true);
+          $('#fixorder').css('color', '#999');
+          $("#category").tableDnD({
+            onDragClass: 'tDnD_whileDrag',
+            onDragStart: function(table, row){
+              $('#fixorder').attr('disabled', false);
+              $('#fixorder').css('color', 'black');
+            },
+            onDrop: function(table, row) {
+              $('#order').val($.tableDnD.serialize());
+            },
+            dragHandle: ".handle"
+          });
+        });
+        // -->
+    </script>

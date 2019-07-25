@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <?php $this->mb_include(HTMLDIR. '/include/head.html') ?>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="header">
+        <?php $this->mb_include(HTMLDIR. '/include/header.html') ?>
+      </div>
+      <!-- /#header -->
+      <div id="contents" class="row">
+        <div class="col-md-2 sidebar">
+          <?php $this->mb_include(HTMLDIR. '/include/sidebar.html') ?>
+        </div>
+        <!-- /.col-xs-2 -->
+        <div class="col-md-10">
+          <ol class="breadcrumb">
+            <li>
+              <a href="./">
+              <?php echo SITENAME ?>
+              </a>
+            </li>
+            <li class="active">
+              <?php echo $this->item_subject ?>情報管理
+            </li>
+          </ol>
+          <!-- /.breadcrumb -->
+          <div id="navi">
+            <ul class="nav nav-pills">
+              <li role="presentation">
+                <button class="btn-nav active btn-active">
+                <?php echo $this->item_subject ?>情報一覧</button>
+              </li>
+              <li role="presentation">
+                <button class="btn btn-nav" onclick="location.href='<?php echo MYSELF ?>?mode=form&<?php echo $this->query_string ?>'">新規登録</button>
+              </li>
+            </ul>
+          </div>
+          <!--#navi-->
+          <div id="data">
+            <div class="patternPan">
+              <?php echo $this->item_subject ?>情報一覧を表示しています。
+            </div>
+            <form name="form" action="<?php echo MYSELF ?>" method="POST" id="form">
+              <input type="hidden" name="mode" value="update">
+              <input type="hidden" name="order" id="order" value="">
+              <table class="table table-bordered table-hover" id="category">
+                <thead>
+                  <tr>
+                    <th class="threg col-md-2 text-center">表示順</th>
+                    <th class="threg col-md-3 text-center">キーワード</th>
+                    <th class="threg col-md-1 text-center">公開設定</th>
+                    <th class="threg col-md-2 text-center" colspan="2">処理</th>
+                  </tr>
+                </thead>
+                <tbody class="sortable">
+<?php $n = 1 ?>
+<?php foreach ($this->display AS $seq => $data): ?>
+                  <tr id="<?php echo $seq ?>">
+                    <td class="tdreg text-center handle">
+                      <?php echo $n ?>
+                    </td>
+                    <td class="text-center tdreg">
+                      <?php echo _str($data['title']) ?>
+                    </td>
+                    <td class="text-center tdreg">
+                      <input type="hidden" name="seq[<?php echo $seq ?>]" value="<?php echo $seq ?>">
+                      <?php echo checkbox( "flag[$seq]", $this->labelCheck, $data['flag']) ?>
+                    </td>
+                    <td class="text-center tdreg">
+                      <a href="<?php echo MYSELF ?>?mode=form&seq=<?php echo $seq ?>&<?php echo $this->query_string ?>" class="btn btn-default btn-sm"><span class="fa fa-edit" alt="修 正"></span>&nbsp;修正</a>
+                      <a href="<?php echo MYSELF ?>?mode=confirm_delete&seq=<?php echo $seq ?>&<?php echo $this->query_string ?>" class="btn btn-danger btn-sm"><span class="fa fa-trash-o" alt="削 除"></span>&nbsp;削除</a>
+                    </td>
+                  </tr>
+<?php $n++ ?>
+<?php endforeach ?>
+                </tbody>
+                <tfoot>
+                  <tr class="br">
+                    <td class="text-center msg">
+                      <button type="submit" class="btn btn-default" name="fixorder" id="fixorder" value=" "　></button>
+                    </td>
+                    <td colspan="1">&nbsp;</td>
+                    <td class="text-center">
+                      <button type="submit" class="btn btn-primary" name="update" id="update" value=" "><span class="glyphicon glyphicon-refresh" alt="更 新"></span></button>
+                    </td>
+                    <td colspan="1">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td colspan="5">
+                      全<?php echo number_format($this->count) ?>件
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </form>
+            <!-- /#form -->
+<?php if ($this->pager && $this->pager->has_pages()): ?>
+            <nav class="text-center">
+              <ul class="pagination">
+<?php if ($this->pager->has_prev()): ?>
+                <li><a href="<?php echo $this->pager->prev_url() ?>" aria-label="Previous">&laquo;</a></li>
+<?php endif ?>
+<?php foreach ($this->pager->pages AS $data): ?>
+<?php if ($data[ 'current']): ?>
+                <li class="active"><a href="<?php echo $data['url'] ?>"><?php echo $data[ 'page'] ?><span class="sr-only">(current)</span></a></li>
+<?php else: ?>
+                <li><a href="<?php echo $data['url'] ?>"><?php echo $data[ 'page'] ?></a></li>
+<?php endif ?>
+<?php endforeach ?>
+<?php if ($this->pager->has_next()): ?>
+                <li><a href="<?php echo $this->pager->next_url() ?>" aria-label="Next">&raquo;</a></li>
+<?php endif ?>
+              </ul>
+            </nav>
+<?php endif ?>
+          </div>
+          <!-- /#data -->
+        </div>
+        <!-- /.col-md-10 -->
+      </div>
+      <!-- /#contents .row -->
+    </div>
+    <!-- /#wrapper -->
+    <?php $this->mb_include(HTMLDIR. '/include/footer.html') ?>
+    <script type="text/javascript" src="/system/js/jquery.tablednd.js"></script>
+    <script src="/system/js/headsupgrid/hugrid.js"></script>
+    <script type="text/javascript">
+      <!--
+      // $(document).ready(function(){
+      //   $('#fixorder').attr('disabled', true);
+      //   $('#fixorder').css('color', '#999');
+      //   $("#category").tableDnD({
+      //     onDragClass: 'tDnD_whileDrag',
+      //     onDragStart: function(table, row){
+      //       $('#fixorder').attr('disabled', false);
+      //       $('#fixorder').css('color', 'black');
+      //     },
+      //     onDrop: function(table, row) {
+      //       $('#order').val($.tableDnD.serialize());
+      //     },
+      //     dragHandle: ".handle"
+      //   });
+      // });
+      // -->
+    </script>
+    <?php $this->mb_include(HTMLDIR. '/include/fixorder_move.html') ?>
+  </body>
+</html>

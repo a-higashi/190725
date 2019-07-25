@@ -1,0 +1,14 @@
+<array>
+<sitename>ページデモ</sitename>
+<copyright>Copyright (C) *YOUR COMPANY NAME* All Right Reserved.</copyright>
+<dbtype>3</dbtype>
+<dbhost />
+<dbname>/var/www/vhosts/qiq.to/www/phinagata/TMP/314a570bfab002b36ff73f5d4a45cbc7/entry/system/data/entry.db</dbname>
+<dbuser />
+<dbpass />
+<fromname />
+<mailfrom />
+<adminemail />
+<tables>entry</tables>
+<writable>./TMP/314a570bfab002b36ff73f5d4a45cbc7/entry/system/data,./TMP/314a570bfab002b36ff73f5d4a45cbc7/entry/htdocs/entry.php,./TMP/314a570bfab002b36ff73f5d4a45cbc7/entry/htdocs/admin/entry.php,./TMP/314a570bfab002b36ff73f5d4a45cbc7/entry/system/config.php</writable>
+</array>

@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <?php $this->mb_include(HTMLDIR. '/include/head.html') ?>
+    <style>
+.cke_dialog_ui_radio {
+  display: none !important;
+}
+    </style>
+  </head>
+  <body id="two-left-w">
+    <div id="wrapper">
+      <div id="header">
+        <?php $this->mb_include(HTMLDIR. '/include/header.html') ?>
+      </div>
+      <!-- /#header -->
+      <div id="contents" class="row">
+        <div class="col-md-2 sidebar">
+          <?php $this->mb_include(HTMLDIR. '/include/sidebar.html') ?>
+        </div>
+        <!-- /.col-xs-2 -->
+        <div class="col-md-10">
+          <ol class="breadcrumb">
+            <li>
+              <a href="./">
+              <?php echo SITENAME ?>
+              </a>
+            </li>
+            <li>
+              <a href="<?php echo MYSELF ?>?<?php echo $this->query_string ?>">
+                <?php echo $this->item_subject ?>情報一覧
+              </a>
+            </li>
+            <li class="active">
+              <?php echo $this->item_subject ?>情報
+              <?php echo ($this->seq)? '修正': '新規登録' ?>
+            </li>
+          </ol>
+          <!-- /.breadcrumb -->
+          <div id="navi">
+            <ul class="nav nav-pills">
+              <li role="presentation">
+                <button class="btn btn-nav" onclick="location.href='<?php echo MYSELF ?>'">
+                <?php echo $this->item_subject ?>情報一覧
+                </button>
+              </li>
+              <li role="presentation">
+                <button class="btn-nav active btn-active">
+                <?php echo ($this->seq)? '修正': '新規登録' ?>
+                </button>
+              </li>
+            </ul>
+          </div>
+          <!--#navi-->
+          <div id="data">
+            <div class="patternPan">
+              <p>
+                <?php echo $this->item_subject ?>情報を編集します。
+              </p>
+              <p><span class="error">＊の項目は必ず入力・選択してください</span>
+              </p>
+            </div>
+            <!-- /.patternPan -->
+<?php if ($this->error): ?>
+            <div class="alert-error alert-danger" role="alert">
+              <ul>
+                <li>
+                  <?php echo implode( '</li><li>', $this->error) ?>
+                </li>
+              </ul>
+            </div>
+            <!-- /.alert-error -->
+<?php endif ?>
+            <form name="form" action="<?php echo MYSELF ?>" method="POST" enctype="multipart/form-data" class="form-inline form">
+              <input type="hidden" name="offset" value="<?php echo $this->_offset ?>" />
+<?php foreach ($this->query AS $name => $value): ?>
+              <input type="hidden" name="<?php echo _str($name) ?>" value="<?php echo _str($value) ?>" />
+<?php endforeach ?>
+              <input type="hidden" name="mode" value="confirm">
+              <input type="hidden" name="seq" value="<?php echo $this->_seq ?>">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <th class="threg col-md-2">掲載日<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <p><span class="error">※手動で入力する際は年/月/日で入力してください（例：<?php echo date('Y/05/01') ?>）</span>
+                      </p>
+                      <input class="form-control input-text short datetime" type="text" name="publish" value="<?php echo $this->_publish ?>" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">名前<span class="error">＊</span></th>
+                    <td class="col-md-10">
+                       <input class="form-control input-text superlong" type="text" name="title" value="<?php echo $this->_title ?>" maxlength="40"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">読み<!-- <span class="error">＊</span> --></th>
+                    <td class="col-md-10">
+                       <!-- <p><span class="error">※推奨文字数は7文字以下です</span></p> -->
+                       <input class="form-control input-text superlong" type="text" name="subtitle" value="<?php echo $this->_subtitle ?>" maxlength="40"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">会社名<!-- <span class="error">＊</span> --></th>
+                    <td class="col-md-10">
+                       <p><span class="error">※推奨文字数は7文字以下です</span></p>
+                       <input class="form-control input-text superlong" type="text" name="firm" value="<?php echo $this->_firm ?>" maxlength="40"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">所属<!-- <span class="error">＊</span> --></th>
+                    <td class="col-md-10">
+                       <p><span class="error">※推奨文字数は7文字以下です</span></p>
+                       <input class="form-control input-text superlong" type="text" name="dep" value="<?php echo $this->_dep ?>" maxlength="40"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">職種<!-- <span class="error">＊</span> --></th>
+                    <td class="col-md-10">
+                       <p><span class="error">※推奨文字数は7文字以下です</span></p>
+                       <input class="form-control input-text superlong" type="text" name="occ" value="<?php echo $this->_occ ?>" maxlength="40"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">画像<!-- <span class="error">＊</span> --></th>
+                    <td class="col-md-10">
+                      <p><span class="error">※推奨画像サイズは幅1200px、縦600px、容量1MB以下です</span></p>
+<?php if (is_file($this->image->realpath())): ?>
+<?php   list($width, $height) = getimagesize($this->image->path()) ?>
+                      <div>現在の画像:</div>
+                      <div class="sample_image"><a class="fancy_img" href="<?php echo $this->image->path() ?>"><img src="<?php echo $this->image->path() ?>?<?php echo time() ?>" class="img-responsive img-thumbnail"></a></div>
+                      <div><p>登録画像の大きさ:幅<?php echo $width ?>×高さ<?php echo $height ?></p></div>
+                      <!-- <div class="bg-danger img-delete"><?php echo checkbox('image_delete', $this->labelDelete, $this->image_delete) ?></div> -->
+<?php endif ?>
+<?php if (is_file($this->image->tmp_path())): ?>
+<?php   list($width, $height) = getimagesize($this->image->tmp_path()) ?>
+                      <div>仮アップ中画像:</div>
+                      <div class="sample_image"><a class="fancy_img" href="<?php echo $this->image->tmp_path() ?>"><img src="<?php echo $this->image->tmp_path() ?>" class="img-responsive img-thumbnail"></a></div>
+                      <div><p>登録画像の大きさ:幅<?php echo $width ?>×高さ<?php echo $height ?></p></div>
+<?php endif ?>
+                      <div class="col-md-6 file_input">
+                        <input type="hidden" name="image_tmp" value="<?php echo $this->image->tmp_id() ?>">
+                        <input type="file" name="<?php echo $this->image->name ?>" class="input-file" accept="image/png, image/jpeg, image/gif" onchange="check_image(this)">
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">一覧用画像<!-- <span class="error">＊</span> --></th>
+                    <td class="col-md-10">
+                      <p><span class="error">※推奨画像サイズは幅480px、縦800px、容量1MB以下です</span></p>
+<?php if (is_file($this->thumb->realpath())): ?>
+<?php   list($width, $height) = getimagesize($this->thumb->path()) ?>
+                      <div>現在の画像:</div>
+                      <div class="sample_image"><a class="fancy_img" href="<?php echo $this->thumb->path() ?>"><img src="<?php echo $this->thumb->path() ?>?<?php echo time() ?>" class="img-responsive img-thumbnail"></a></div>
+                      <div><p>登録画像の大きさ:幅<?php echo $width ?>×高さ<?php echo $height ?></p></div>
+                      <!-- <div class="bg-danger img-delete"><?php echo checkbox('thumb_delete', $this->labelDelete, $this->thumb_delete) ?></div> -->
+<?php endif ?>
+<?php if (is_file($this->thumb->tmp_path())): ?>
+<?php   list($width, $height) = getimagesize($this->thumb->tmp_path()) ?>
+                      <div>仮アップ中画像:</div>
+                      <div class="sample_image"><a class="fancy_img" href="<?php echo $this->thumb->tmp_path() ?>"><img src="<?php echo $this->thumb->tmp_path() ?>" class="img-responsive img-thumbnail"></a></div>
+                      <div><p>登録画像の大きさ:幅<?php echo $width ?>×高さ<?php echo $height ?></p></div>
+<?php endif ?>
+                      <div class="col-md-6 file_input">
+                        <input type="hidden" name="thumb_tmp" value="<?php echo $this->thumb->tmp_id() ?>">
+                        <input type="file" name="<?php echo $this->thumb->name ?>" class="input-file" accept="image/png, image/jpeg, image/gif" onchange="check_image(this)">
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">タイプ1（体育会系）<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo select('param1', array(0 => "選択してください") + $this->labelParam, $this->param1, 'class="form-control" id="select"') ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">タイプ2（理系・研究）<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo select('param2', array(0 => "選択してください") + $this->labelParam, $this->param2, 'class="form-control" id="select"') ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">タイプ3（モノづくり）<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo select('param3', array(0 => "選択してください") + $this->labelParam, $this->param3, 'class="form-control" id="select"') ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">タイプ4（グローバル）<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo select('param4', array(0 => "選択してください") + $this->labelParam, $this->param4, 'class="form-control" id="select"') ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">タイプ5（働き方）<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo select('param5', array(0 => "選択してください") + $this->labelParam, $this->param5, 'class="form-control" id="select"') ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">公開設定</th>
+                    <td class="col-md-10">
+                      <?php echo checkbox( 'flag', array(1=> '公開する'), $this->_flag) ?>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- /.table -->
+              <div class="form-inline">
+                <div class="form-group">
+                  <input class="btn btn-primary" name="ok" value="確認" type="submit" /> <a class="btn btn-default" href="<?php echo MYSELF ?>?<?php echo $this->query_string ?>">一覧に戻る</a>
+                </div>
+              </div>
+              <!-- /.form-inline -->
+            </form>
+            <!-- /#form -->
+          </div>
+          <!-- /#data -->
+        </div>
+        <!-- /.col-md-10 -->
+      </div>
+      <!-- /#contents .row -->
+    </div>
+    <!-- #wrapper -->
+    <?php $this->mb_include(HTMLDIR. '/include/footer.html') ?>
+    <?php $this->mb_include(HTMLDIR. '/include/datetime.html') ?>
+    <?php // echo CK_LINK. "\n" ?>
+    <script>
+      $(function() {
+        $(".datetime").datepicker();
+        $('.datetime').datepicker("option", "dateFormat", 'yy/mm/dd' );
+      });
+//       CKEDITOR.replace('ck_<?php echo CK_TYPE ?>', {
+//           contentsCss: ['<?php echo implode("', '", $this->ckListCss) ?>'],
+//           coreStyles_bold: {
+//               element: 'b',
+//               overrides: 'strong'
+//           },
+//           toolbar: [
+//               ['Source', '-', 'NewPage', 'Preview'],
+//               ['Cut', 'Copy', 'Paste', '-', 'Undo', 'Redo'],
+//               ['Bold', 'Underline', 'Strike']
+//               //,['NumberedList','BulletedList']
+//               ,
+//               ['JustifyLeft', 'JustifyCenter', 'JustifyRight'],
+//               ['Link', 'Unlink', '-', 'Image'],
+//               ['FontSize',],
+//               ['TextColor', 'BGColor'],
+//               ['Maximize', 'ShowBlocks'],
+//               // ['Youtube','Font']
+//               ['Youtube']
+//         ],
+//         extraPlugins: 'youtube,autoembed,image2,uploadimage,uploadfile',
+//         removePlugins: 'image',
+// <?php if ($this->enter_mode): ?>
+//           enterMode: 2,
+//           shiftEnterMode: 1,
+// <?php endif ?>
+// <?php if ($this->ckclass): ?>
+//           bodyClass: '<?php echo $this->ckclass ?>',
+// <?php endif ?>
+// <?php if ($this->ckid): ?>
+//           bodyId: '<?php echo $this->ckid ?>',
+// <?php endif ?>
+//           width: '100%',
+//           height: '500px',
+//           // templates_files:['js/<?php echo CKEDITOR ?>/plugins/templates/templates/default.js'],
+//           // templates:'default',
+//           // templates_replaceContent: false,
+//           filebrowserBrowseUrl: '<?php echo CK_BROWSE ?>',
+//           filebrowserImageBrowseUrl: '<?php echo CK_IMAGE_BROWSE ?>',
+//           filebrowserFlashBrowseUrl: '<?php echo CK_FLASH_BROWSE ?>',
+//           filebrowserUploadUrl: '<?php echo CK_UPLOAD_URL ?>',
+//           filebrowserImageUploadUrl: '<?php echo CK_IMAGE_URL ?>',
+//           filebrowserFlashUploadUrl: '<?php echo CK_FLASH_URL ?>',
+//       });
+//       CKEDITOR.on('dialogDefinition', function(ev) {
+//           var dialogName = ev.data.name;
+//           var dialogDefinition = ev.data.definition;
+//           if (dialogName == 'link') {
+//               dialogDefinition.removeContents('advanced');
+//           }
+//           if (dialogName == 'image') {
+//               dialogDefinition.removeContents('advanced');
+//           }
+//       });
+    </script>
+    <!--[if lt IE 9]>
+    <script src="../cmn/js/html5shiv.js"></script>
+    <script src="../cmn/js/respond.js"></script>
+    <![endif]-->
+  </body>
+</html>

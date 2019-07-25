@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <?php $this->mb_include(HTMLDIR. '/include/head.html') ?>
+    <style type="text/css" media="screen">
+      .embed-container {
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      }
+      .embed-container iframe {
+      max-width: 1050px;
+      width: 100%;
+      height: 100%;
+      }
+    </style>
+    <script>
+      if (!window.addEventListener) {
+          var iframe = document.getElementById("sample");
+          iframe.frameBorder = 0; //または iframe.setAttribute("frameBorder","0"); でも可
+      }
+    </script>
+  </head>
+  <body id="two-left-w">
+    <div id="wrapper">
+      <div id="header">
+        <?php $this->mb_include(HTMLDIR. '/include/header.html') ?>
+      </div>
+      <!-- /#header -->
+      <div id="contents" class="row">
+        <div class="col-md-2 sidebar">
+          <?php $this->mb_include(HTMLDIR. '/include/sidebar.html') ?>
+        </div>
+        <!-- /.col-xs-2 -->
+        <div class="col-md-10">
+          <ol class="breadcrumb">
+            <li>
+              <a href="./">
+              <?php echo SITENAME ?>
+              </a>
+            </li>
+            <li>
+              <a href="<?php echo MYSELF ?>?<?php echo $this->query_string ?>">
+              <?php echo $this->item_subject ?>情報一覧</a>
+            </li>
+            <li class="active">
+              <?php echo $this->item_subject ?>
+              <?php echo ($this->seq)? '修正': '新規登録' ?>
+            </li>
+          </ol>
+          <!-- /.breadcrumb -->
+          <div id="navi">
+            <ul class="nav nav-pills">
+              <li role="presentation">
+                <button class="btn btn-nav" onclick="location.href='<?php echo MYSELF ?>'">
+                <?php echo $this->item_subject ?>情報一覧</button>
+              </li>
+              <li role="presentation">
+                <button class="btn-nav active btn-active">情報
+                <?php echo ($this->seq)? '修正': '新規登録' ?></button>
+              </li>
+            </ul>
+          </div>
+          <!-- /#navi-->
+          <div id="data">
+            <div class="patternPan">
+              <?php echo $this->item_subject ?>情報を確認します。
+            </div>
+            <!-- /.patternPan -->
+            <form action="<?php echo MYSELF ?>" method="POST" class="form-inline form" enctype="multipart/form-data" id="form">
+              <input type="hidden" name="offset" value="<?php echo $this->_offset ?>" />
+<?php foreach ($this->query AS $name => $value): ?>
+              <input type="hidden" name="<?php echo $name ?>" value="<?php echo _str($value) ?>" />
+<?php endforeach ?>
+              <input type="hidden" id="mode" name="mode" value="commit">
+              <input type="hidden" name="seq" value="<?php echo $this->_seq ?>">
+              <input type="hidden" name="flag" value="<?php echo $this->_flag ?>">
+              <input type="hidden" name="title" value="<?php echo $this->_title ?>">
+<?php /*
+              <input type="hidden" name="publish" value="<?php echo $this->_publish ?>">
+              <input type="hidden" name="image_tmp" value="<?php echo $this->_image_tmp ?>">
+              <input type="hidden" name="image_delete" value="<?php echo $this->_image_delete ?>">
+              <input type="hidden" name="thumb_tmp" value="<?php echo $this->_thumb_tmp ?>">
+              <input type="hidden" name="thumb_delete" value="<?php echo $this->_thumb_delete ?>">
+ */ ?>
+              <input type="hidden" name="param1" value="<?php echo $this->_param1 ?>">
+              <input type="hidden" name="param2" value="<?php echo $this->_param2 ?>">
+              <input type="hidden" name="param3" value="<?php echo $this->_param3 ?>">
+              <input type="hidden" name="param4" value="<?php echo $this->_param4 ?>">
+              <input type="hidden" name="param5" value="<?php echo $this->_param5 ?>">
+              <table class="table table-bordered">
+                <tbody>
+<?php /*
+                  <tr>
+                    <th class="threg col-md-2">掲載日<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo $this->publish ?>
+                    </td>
+                  </tr>
+ */ ?>
+                  <tr>
+                    <th class="threg col-md-2">キーワード<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo $this->_title ?>
+                    </td>
+                  </tr>
+<?php /*
+                  <tr>
+                    <th class="threg col-md-2">画像<!-- <span class="error">＊</span> --></th>
+                    <td class="col-md-10">
+<?php if (is_file($this->image->realpath())): ?>
+<?php   list($width, $height) = getimagesize($this->image->path()) ?>
+                      <div>現在の画像:</div>
+                      <div class="sample_image"><a class="fancy_img" href="<?php echo $this->image->path() ?>"><img src="<?php echo $this->image->path() ?>?<?php echo time() ?>" class="img-responsive img-thumbnail"></a></div>
+                      <div><p>登録画像の大きさ:幅<?php echo $width ?>×高さ<?php echo $height ?></p></div>
+<?php   if (isset($this->labelDelete[$this->image_delete])): ?>
+                      <div><p class="bg-danger img-delete"><?php if($this->image_delete) echo $this->labelDelete[$this->image_delete] ?></p></div>
+<?php   endif ?>
+<?php endif ?>
+<?php if (is_file($this->image->tmp_path())): ?>
+<?php   list($width, $height) = getimagesize($this->image->tmp_path()) ?>
+                      <div>仮アップ中画像:</div>
+                      <div class="sample_image"><a class="fancy_img" href="<?php echo $this->image->tmp_path() ?>"><img src="<?php echo $this->image->tmp_path() ?>?<?php echo time() ?>" class="img-responsive img-thumbnail"></a></div>
+                      <div><p>登録画像の大きさ:幅<?php echo $width ?>×高さ<?php echo $height ?></p></div>
+<?php endif ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">一覧用画像<!-- <span class="error">＊</span> --></th>
+                    <td class="col-md-10">
+<?php if (is_file($this->thumb->realpath())): ?>
+<?php   list($width, $height) = getimagesize($this->thumb->path()) ?>
+                      <div>現在の画像:</div>
+                      <div class="sample_image"><a class="fancy_img" href="<?php echo $this->thumb->path() ?>"><img src="<?php echo $this->thumb->path() ?>?<?php echo time() ?>" class="img-responsive img-thumbnail"></a></div>
+                      <div><p>登録画像の大きさ:幅<?php echo $width ?>×高さ<?php echo $height ?></p></div>
+<?php   if (isset($this->labelDelete[$this->thumb_delete])): ?>
+                      <div><p class="bg-danger img-delete"><?php if($this->thumb_delete) echo $this->labelDelete[$this->thumb_delete] ?></p></div>
+<?php   endif ?>
+<?php endif ?>
+<?php if (is_file($this->thumb->tmp_path())): ?>
+<?php   list($width, $height) = getimagesize($this->thumb->tmp_path()) ?>
+                      <div>仮アップ中画像:</div>
+                      <div class="sample_image"><a class="fancy_img" href="<?php echo $this->thumb->tmp_path() ?>"><img src="<?php echo $this->thumb->tmp_path() ?>?<?php echo time() ?>" class="img-responsive img-thumbnail"></a></div>
+                      <div><p>登録画像の大きさ:幅<?php echo $width ?>×高さ<?php echo $height ?></p></div>
+<?php endif ?>
+                    </td>
+                  </tr>
+ */ ?>
+                  <tr>
+                    <th class="threg col-md-2">タイプ1（体育会系）<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo $this->labelParam[$this->_param1] ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">タイプ2（理系・研究）<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo $this->labelParam[$this->_param2] ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">タイプ3（モノづくり）<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo $this->labelParam[$this->_param3] ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">タイプ4（グローバル）<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo $this->labelParam[$this->_param4] ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">タイプ5（働き方）<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo $this->labelParam[$this->_param5] ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">公開設定</th>
+                    <td class="col-md-10">
+                      <?php echo $this->labelFlag[$this->_flag] ?>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- /.table -->
+              <div class="form-inline">
+                <div class="form-group">
+                  <input class="btn btn-primary" name="ok" id="ok" value="登録" type="submit" />
+                  <input class="btn btn-default" name="cancel" id="cancel" value="修正する" type="submit">
+                  <a class="btn btn-default" id="lists" href="<?php echo MYSELF ?>?<?php echo $this->query_string ?>">一覧に戻る</a>
+                </div>
+              </div>
+              <!-- /.form-inline -->
+            </form>
+            <!-- /#form -->
+          </div>
+          <!-- /#data -->
+        </div>
+        <!-- /.col-md-10 -->
+      </div>
+      <!-- /#contents .row -->
+    </div>
+    <!-- /#wrapper -->
+    <?php $this->mb_include(HTMLDIR. '/include/footer.html') ?>
+  </body>
+</html>

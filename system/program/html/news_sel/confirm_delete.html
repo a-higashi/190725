@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+<?php $this->mb_include(HTMLDIR. '/include/head.html') ?>
+    <style type="text/css" media="screen">
+      .embed-container {
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      }
+      .embed-container iframe {
+      max-width: 1050px;
+      width: 100%;
+      height: 100%;
+      }
+    </style>
+    <script>
+      if (!window.addEventListener) {
+        var iframe = document.getElementById("sample");
+        iframe.frameBorder = 0; //または iframe.setAttribute("frameBorder","0"); でも可
+      }
+    </script>
+  </head>
+  <body id="two-left-w">
+    <div id="wrapper">
+      <div id="header">
+<?php $this->mb_include(HTMLDIR. '/include/header.html') ?>
+      </div>
+      <!-- /#header -->
+      <div id="contents" class="row">
+        <div class="col-md-2 sidebar">
+<?php $this->mb_include(HTMLDIR. '/include/sidebar.html') ?>
+        </div>
+        <!-- /.col-xs-2 -->
+        <div class="col-md-10">
+          <ol class="breadcrumb">
+            <li>
+              <a href="./">
+              <?php echo SITENAME ?>
+              </a>
+            </li>
+            <li>
+              <a href="<?php echo MYSELF ?>?<?php echo $this->query_string ?>">
+              <?php echo $this->item_subject ?>情報一覧</a>
+            </li>
+            <li class="active">
+              <?php echo $this->item_subject ?>情報削除確認
+            </li>
+          </ol>
+          <div id="navi">
+            <ul class="nav nav-pills">
+              <li role="presentation">
+                <button class="btn btn-nav" onclick="location.href='<?php echo MYSELF ?>'">
+                <?php echo $this->item_subject ?>情報一覧</button>
+              </li>
+              <li role="presentation">
+                <button class="btn-nav active btn-active">削除確認</button>
+              </li>
+            </ul>
+          </div>
+          <!--#navi-->
+          <div id="data">
+            <div class="patternPan">
+              <?php echo $this->item_subject ?>情報を削除します。
+            </div>
+            <div class="clear"></div>
+            <form action="<?php echo MYSELF ?>" method="POST" class="form-inline form" enctype="multipart/form-data" id="form">
+              <input type="hidden" name="offset" value="<?php echo $this->_offset ?>" />
+<?php foreach ($this->query AS $name => $value): ?>
+              <input type="hidden" name="<?php echo $name ?>" value="<?php echo _str($value) ?>" />
+<?php endforeach ?>
+              <input type="hidden" name="mode" value="delete">
+              <input type="hidden" name="seq" value="<?php echo $this->_seq ?>">
+              <input type="hidden" id="body_data" name="body" value="<?php echo $this->_body ?>">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <th class="threg col-md-2">掲載日<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo $this->publish ?>&nbsp;&nbsp;<?php echo $this->publish_hour ?>&nbsp;:&nbsp;<?php echo $this->publish_minute ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">カテゴリ<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo $this->labelCategory[$this->_category] ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">記事タイプ<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo $this->labelType[$this->_type] ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="threg col-md-2">タイトル<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo $this->_url ?> 処理：<?php if ($this->url_bl = 1) echo $this->labelUrl_bl[$this->url_bl] ?>
+                    </td>
+                  </tr>
+                <?php if ($this->type == 3) : ?>
+                  <tr>
+                    <th class="threg col-md-2">URL<span class="error">＊</span>
+                    </th>
+                    <td class="col-md-10">
+                      <?php echo $this->_url ?>
+                    </td>
+                  </tr>
+                <?php elseif ($this->type == 2) : ?>
+                  <tr>
+                    <th class="threg col-md-2">PDFファイル</th>
+                    <td class="col-md-10">
+<?php if (is_file($this->pdf->realpath())): ?>
+                      <div><a href="<?php echo $this->pdf->realpath() ?>" target="_blank">現在のファイル</a></div>
+<?php endif ?>
+<?php if (is_file($this->pdf->tmp_path())): ?>
+                      <div><a href="<?php echo $this->pdf->tmp_path() ?>" target="_blank">仮アップ中ファイル</a></div>
+<?php endif ?>
+                    </td>
+                  </tr>
+                <?php elseif ($this->type == 1) : ?>
+                  <tr>
+                    <th class="threg col-md-2">本文<span class="error">＊</span></th>
+                    <td class="col-md-10"><!-- <p><span class="error">※最大表示幅は700pxです。</span></p> -->
+                    <div class="embed-container"><iframe src="template/news_detail.html" frameborder:="0" id="sample" style="height: 800px; border: none;"></iframe></div>
+                    </td>
+                  </tr>
+                <?php endif ?>
+                  <tr>
+                    <th class="threg col-md-2">公開設定</th>
+                    <td class="col-md-10">
+                      <?php echo $this->labelFlag[$this->flag] ?>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="form-inline">
+                <div class="form-group">
+                  <input class="btn btn-danger" name="ok" value="削除" type="submit" />
+                  <a class="btn btn-default" href="<?php echo MYSELF ?>?<?php echo $this->query_string ?>">一覧に戻る</a>
+                </div>
+              </div>
+              <!-- /#naviBt03 -->
+            </form>
+          </div>
+          <!-- /#data -->
+        </div>
+        <!-- /.col-md-10 -->
+      </div>
+      <!-- /#contents .row -->
+    </div>
+    <!-- /#wrapper -->
+    <?php $this->mb_include(HTMLDIR. '/include/footer.html') ?>
+    <?php $this->mb_include(HTMLDIR. '/include/fancy_inc.html') ?>
+  </body>
+</html>

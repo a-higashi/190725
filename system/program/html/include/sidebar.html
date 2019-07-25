@@ -1,0 +1,32 @@
+<?php 
+  require_once('program/inc/common.php');
+  $category = category();
+ ?>
+<div class="list-group">
+  <span href="#" class="list-group-item active">
+    CORPORATE
+  </span>
+  <a href="news_sel.php" class="list-group-item">新着情報管理</a>
+  <a href="news_shunen.php" class="list-group-item">周年イントラ新着管理</a>
+  <!-- <a href="product.php" class="list-group-item">製品情報管理</a> -->
+  <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="list-group-item">製品情報管理</a>
+  <div id="collapseTwo" class="panel-collapse collapse">
+<?php foreach ($category as $key => $value) { ?>
+  <a href="product.php?cat=<?php echo $key ?>" class="list-group-item">（<?php echo $value ?>）</a>
+<?php } ?>
+  </div>
+</div>
+<div class="list-group">
+  <span href="#" class="list-group-item active">
+    RECRUIT
+  </span>
+  <a href="news_rec.php" class="list-group-item">採用向け新着情報管理</a>
+  <a href="interview.php" class="list-group-item">インタビュー管理</a>
+  <a href="keyword.php" class="list-group-item">キーワード管理</a>
+</div>
+<div class="list-group">
+  <span href="#" class="list-group-item active">
+    ACCOUNT
+  </span>
+  <a href="password.php" class="list-group-item">アカウント管理</a>
+</div>
